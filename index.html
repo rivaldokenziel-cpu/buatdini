@@ -1,1 +1,177 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cinnamoroll Semangat untuk Dinii ☁️💙</title>
+  <style>
+    :root {
+      --bg1: #d8f3ff;
+      --bg2: #f5faff;
+      --accent: #8ac6ff;
+      --pink: #ffbde6;
+      --white: #ffffff;
+      --text: #404b69;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow: hidden;
+      font-family: 'Poppins', 'Comic Neue', sans-serif;
+      color: var(--text);
+    }
+
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: float 60s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(120vw); }
+    }
+
+    .card {
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 600px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #4f73b8;
+      margin-bottom: 8px;
+    }
+    p { color: #6b7aa1; margin-bottom: 20px; }
+
+    #line {
+      font-size: 20px;
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      min-height: 80px;
+      transition: all .3s ease;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 5px;
+    }
+    button:hover { background: var(--pink); transform: scale(1.05); }
+
+    .stars span {
+      position: absolute;
+      display: block;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s linear infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div id="clouds"></div>
+
+  <div class="card">
+    <h1>☁️ Kata Semangat untuk Dinii ✨</h1>
+    <p>Hai Dinii 💙 ini aku buat khusus buat kamu, supaya kalau lagi capek atau sedih bisa klik tombol ini dan dapet semangat baru ☁️🐰</p>
+    <div id="line">Dinii hebat banget hari ini, bahkan Cinnamoroll aja iri sama semangatmu 🐰💫</div>
+    <button id="random">✨ Acak Semangat!</button>
+    <button id="copy">💌 Copy</button>
+  </div>
+
+  <script>
+    const lines = [
+      "Semangat yaa Dinii! bahkan awan aja iri liat kamu tetep bersinar ☁️💖",
+      "Kalau capek, ingat ya Dinii... bahkan kopi aja butuh istirahat, apalagi kamu yang manis 🫶",
+      "Dinii tuh kayak Cinnamoroll, selalu bikin dunia jadi lebih lembut 💙",
+      "Hari ini susah, Dinii? gapapa kok, langit juga kadang mendung dulu sebelum cerah lagi ☁️✨",
+      "Bangun dan senyum ya Dinii! kamu tuh lucu banget buat disedihin 😋",
+      "Cinnamoroll bilang, ‘ayo semangat Dinii, nanti aku peluk dari awan!’ ☁️💫",
+      "Jangan lupa minum air yaa Dinii, biar hatimu gak kering kayak tugas kuliah 😆",
+      "Dinii tuh bukan cuma kuat, tapi juga menggemaskan banget 🩵",
+      "Kalau dunia jahat sama Dinii, inget aku di sini siap jadi pelindung kecilmu 🐰💪",
+      "Ayo semangat, Dinii! karena senyum kamu tuh lebih manis dari bubble tea 🍬",
+      "Males? gapapa Dinii, yang penting jangan males jadi bahagia 🩷",
+      "Kalau lagi sedih, bayangin aja Cinnamoroll nari buat Dinii 💃☁️"
+    ];
+
+    const lineEl = document.getElementById('line');
+    const randomBtn = document.getElementById('random');
+    const copyBtn = document.getElementById('copy');
+
+    function showRandom() {
+      const randomText = lines[Math.floor(Math.random() * lines.length)];
+      lineEl.style.opacity = 0;
+      setTimeout(() => {
+        lineEl.textContent = randomText;
+        lineEl.style.opacity = 1;
+      }, 300);
+      createStars();
+    }
+
+    randomBtn.addEventListener('click', showRandom);
+
+    copyBtn.addEventListener('click', async ()=>{
+      await navigator.clipboard.writeText(lineEl.textContent);
+      copyBtn.textContent = 'Tersalin! 💫';
+      setTimeout(()=> copyBtn.textContent = '💌 Copy', 1200);
+    });
+
+    // awan bergerak
+    const clouds = document.getElementById('clouds');
+    for(let i=0;i<6;i++){
+      const c = document.createElement('div');
+      c.className = 'cloud';
+      const size = 80 + Math.random()*100;
+      c.style.width = size+'px';
+      c.style.height = size*0.6+'px';
+      c.style.top = Math.random()*80+'vh';
+      c.style.left = -200+'px';
+      c.style.animationDuration = 40 + Math.random()*40+'s';
+      clouds.appendChild(c);
+    }
+
+    // bintang jatuh
+    function createStars(){
+      const container = document.querySelector('.stars');
+      for(let i=0;i<6;i++){
+        const s = document.createElement('span');
+        s.style.left = Math.random()*100+'vw';
+        s.style.top = Math.random()*100+'vh';
+        s.style.animationDuration = 2 + Math.random()*2+'s';
+        container.appendChild(s);
+        setTimeout(()=> s.remove(),3000);
+      }
+    }
+  </script>
+</body>
+</html>
 
